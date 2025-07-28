@@ -104,15 +104,15 @@ public class ProductDao {
 		try {
 			conn = new DbcpBean().getConn();
 			String sql = """
-					INSERT INTO product(num, name, description, price, status)
-					VALUES(product_seq.NEXTVAL, ?, ?, ?, ?)
-					""";
-			pstmt = conn.prepareStatement(sql);
-			// ? 에 순서대로 필요한 값 바인딩
-			pstmt.setString(1, dto.getName());
-			pstmt.setString(2, dto.getDescription());
-			pstmt.setInt(3, dto.getPrice());
-			pstmt.setString(4, dto.getStatus());
+				    INSERT INTO product(num, name, description, price, status, image_path)
+				    VALUES(product_seq.NEXTVAL, ?, ?, ?, ?, ?)
+				    """;
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, dto.getName());
+				pstmt.setString(2, dto.getDescription());
+				pstmt.setInt(3, dto.getPrice());
+				pstmt.setString(4, dto.getStatus());
+				pstmt.setString(5, dto.getImagePath());
 			// sql 문 실행하고 변화된(추가된, 수정된, 삭제된) row 의 갯수 리턴받기
 			rowCount = pstmt.executeUpdate();
 
