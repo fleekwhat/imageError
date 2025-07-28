@@ -56,7 +56,9 @@ public class UploadServlet extends HttpServlet {
 		boolean success = new ProductDao().insert(dto);
 
 		if (success) {
-			response.sendRedirect("product/list.jsp");
+		    // 예) 마지막에 저장된 상품 번호가 있다고 가정하고
+		    response.sendRedirect("product/detail.jsp?num=" + dto.getNum()); // 실제 num을 넘기도록 바꿔야 함
+
 		} else {
 			response.getWriter().println("DB 저장 실패");
 		}

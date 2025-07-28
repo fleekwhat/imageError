@@ -5,13 +5,6 @@
 <%
     int num = Integer.parseInt(request.getParameter("num"));
     ProductDto dto = new ProductDao().getByNum(num);
-
-    if (dto == null) {
-%>
-    <h2>해당 상품이 존재하지 않습니다.</h2>
-<%
-        return;
-    }
 %>
 
 <!DOCTYPE html>
@@ -19,32 +12,28 @@
 <head>
     <meta charset="UTF-8">
     <title>상품 상세</title>
-    <style>
-        .product-img {
-            max-width: 300px;
-            max-height: 300px;
-        }
-    </style>
 </head>
 <body>
     <h1>상품 상세 정보</h1>
-    <table border="1" cellpadding="10">
-        <tr><th>번호</th><td><%=dto.getNum()%></td></tr>
-        <tr><th>상품명</th><td><%=dto.getName()%></td></tr>
-        <tr><th>설명</th><td><%=dto.getDescription()%></td></tr>
-        <tr><th>가격</th><td><%=dto.getPrice()%></td></tr>
-        <tr><th>상태</th><td><%=dto.getStatus()%></td></tr>
-        <tr>
-            <th>이미지</th>
-            <td>
-                <% if (dto.getImagePath() != null && !dto.getImagePath().isEmpty()) { %>
+    
+    <% if (dto != null) { %>
+        <table border="1" cellpadding="10">
+            <tr><th>번호</th><td><%=dto.getNum()%></td></tr>
+            <tr><th>상품명</th><td><%=dto.getName()%></td></tr>
+            <tr><th>설명</th><td><%=dto.getDescription()%></td></tr>
+            <tr><th>가격</th><td><%=dto.getPrice()%></td></tr>
+            <tr><th>상태</th><td><%=dto.getStatus()%></td></tr>
+            <% if (dto.getImagePath() != null && !dto.getImagePath().isEmpty()) { %>
+            <tr>
+                <th>이미지</th>
+                <td>
                     <img src="<%=request.getContextPath() + "/upload/" + dto.getImagePath()%>" class="product-img">
-                <% } else { %>
-                    이미지 없음
-                <% } %>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+            <% } %>
+        </table>
+    <% } %>
+    
     <br>
     <a href="list.jsp">← 목록으로</a>
 </body>
